@@ -46,6 +46,11 @@ EXPECTED_1280 = {
     "step label font-size": (16, 0),
     "step body font-size": (14, 0),
     "feature font-size": (12, 0),
+    # -- チャンク2 --
+    "voice count": (7, 0),
+    "voice bubble font-size": (16, 0),
+    "voice body font-size": (14, 0),
+    "voice media width": (402, 0),
 }
 
 MEASURE_JS = """
@@ -77,6 +82,10 @@ MEASURE_JS = """
     'step label font-size': px(cs(q('.step__label')).fontSize),
     'step body font-size': px(cs(q('.step__body')).fontSize),
     'feature font-size': px(cs(q('.feature p')).fontSize),
+    'voice count': document.querySelectorAll('.voice').length,
+    'voice bubble font-size': px(cs(q('.voice__bubble')).fontSize),
+    'voice body font-size': px(cs(q('.voice__body')).fontSize),
+    'voice media width': q('.voice__media').getBoundingClientRect().width,
     '_font': cs(document.body).fontFamily,
     '_fontLoaded': document.fonts.check('700 48px "Noto Sans JP"'),
     '_docScrollW': document.documentElement.scrollWidth,

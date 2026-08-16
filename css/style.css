@@ -656,6 +656,14 @@ button {
 
 .section-head--center .section-head__bar { margin-inline: auto; }
 
+.section-head__subtitle {
+  margin-top: 12px;
+  font-size: var(--fs-14);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-4);
+  color: var(--c-text-muted);
+}
+
 /* ============================================================
    Intro visual band  946:17694 / 945:17634 / 835:16212
    Hero 直下、Step 群の前にある写真+リード文の帯。
@@ -818,4 +826,131 @@ button {
     flex-direction: row;
     align-items: center;
   }
+}
+
+/* ============================================================
+   Voice（社員の声「いいところ」） 845:16178 ほか ×7
+   写真 + 吹き出し(角丸 + CSS三角) + 本文。左右交互。
+   吹き出しの塗り色は get_design_context を取得できておらず実測不可のため
+   --c-brand で近似（design-decisions.md 参照）。
+   ============================================================ */
+.voice-list {
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+  margin-top: 40px;
+}
+
+.voice {
+  display: flex;
+  align-items: flex-start;
+  gap: 40px;
+}
+
+.voice--reverse { flex-direction: row-reverse; }
+
+.voice__media {
+  flex: 0 0 402px;
+  margin: 0;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+
+.voice__media img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 402 / 280;
+  object-fit: cover;
+}
+
+.voice__content {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding-top: 8px;
+}
+
+.voice__bubble {
+  position: relative;
+  display: inline-block;
+  margin: 0;
+  padding: 14px 24px;
+  background: var(--c-brand);
+  border-radius: var(--radius-card);
+  color: var(--c-text-inverse);
+  font-size: var(--fs-16);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-1);
+}
+
+/* 三角のしっぽ。通常配置(写真左)は吹き出しの左端から左向きに、
+   --reverse(写真右)は右端から右向きに出す（左右反転）。 */
+.voice__bubble::after {
+  content: "";
+  position: absolute;
+  top: 28px;
+  left: -14px;
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  border-right-color: var(--c-brand);
+  border-left: 0;
+}
+
+.voice--reverse .voice__bubble::after {
+  left: auto;
+  right: -14px;
+  border-right: 0;
+  border-left-color: var(--c-brand);
+}
+
+.voice__body {
+  margin: 20px 0 0;
+  font-size: var(--fs-14);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-4);
+  color: var(--c-text);
+}
+
+/* 熱中症対策のみ対応する写真ノードが確認できず、テキストのみの
+   ハイライトとして実装（design-decisions.md 参照）。 */
+.voice--text-only {
+  display: block;
+  padding: 32px;
+  background: var(--c-surface-subtle);
+  border-radius: var(--radius-card);
+}
+
+.voice--text-only .voice__bubble::after { display: none; }
+.voice--text-only .voice__body { max-width: 760px; }
+
+/* ---- ~900px ---- */
+@media (max-width: 900px) {
+  .voice,
+  .voice--reverse {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .voice__media { flex-basis: auto; }
+
+  .voice__bubble::after,
+  .voice--reverse .voice__bubble::after {
+    top: auto;
+    bottom: -14px;
+    left: 28px;
+    right: auto;
+    border: 10px solid transparent;
+    border-top-color: var(--c-brand);
+    border-bottom: 0;
+    border-right-color: transparent;
+    border-left-color: transparent;
+  }
+}
+
+/* ---- ~600px ---- */
+@media (max-width: 600px) {
+  .voice-list { gap: 40px; }
+  .voice__bubble { font-size: var(--fs-14); }
+  .voice--text-only { padding: 24px; }
 }
