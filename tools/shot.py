@@ -40,6 +40,12 @@ EXPECTED_1280 = {
     "gnav font-size": (13, 0),
     "breadcrumb font-size": (11, 0),
     "header top min-height": (53, 1),
+    # -- チャンク1 --
+    "section-head title font-size": (24, 0),
+    "step title font-size": (24, 0),
+    "step label font-size": (16, 0),
+    "step body font-size": (14, 0),
+    "feature font-size": (12, 0),
 }
 
 MEASURE_JS = """
@@ -66,6 +72,11 @@ MEASURE_JS = """
     'gnav font-size': px(cs(q('.gnav__link')).fontSize),
     'breadcrumb font-size': px(cs(q('.breadcrumb__list')).fontSize),
     'header top min-height': q('.header-top').getBoundingClientRect().height,
+    'section-head title font-size': px(cs(q('.section-head__title')).fontSize),
+    'step title font-size': px(cs(q('.step__title')).fontSize),
+    'step label font-size': px(cs(q('.step__label')).fontSize),
+    'step body font-size': px(cs(q('.step__body')).fontSize),
+    'feature font-size': px(cs(q('.feature p')).fontSize),
     '_font': cs(document.body).fontFamily,
     '_fontLoaded': document.fonts.check('700 48px "Noto Sans JP"'),
     '_docScrollW': document.documentElement.scrollWidth,

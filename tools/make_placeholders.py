@@ -21,6 +21,15 @@ LOGO_W, LOGO_H = 150, 39
 HERO_W, HERO_H = 1280, 355
 LINE_W, LINE_H = 71, 73
 
+# チャンク1: 写真プレースホルダの実寸（Figma ノード上の width/height）
+PHOTO_SPECS = {
+    # ファイル名: (幅, 高さ, Figmaノード, 用途)
+    "intro.jpg": (838, 540, "945:17634", "イントロ帯の写真"),
+    "step1.jpg": (473, 358, "940:17603", "Step1 写真（右）"),
+    "step2.jpg": (426, 352, "942:17606", "Step2 写真（左）"),
+    "step3.jpg": (465, 411, "841:16282", "Step3 写真（右）"),
+}
+
 SCALE = 2
 
 
@@ -69,6 +78,36 @@ def make_hero() -> None:
     img.save(ASSETS / "hero.png")
 
 
+def make_photo(filename: str, w: int, h: int, node: str, label: str,
+                seed: int = 0) -> None:
+    """汎用の写真プレースホルダ。実寸ジオメトリを維持し、
+    ノードIDと用途をファイル名コメントとして画像内に焼き込む。"""
+    img = Image.new("RGB", (w, h), (255, 255, 255))
+    d = ImageDraw.Draw(img)
+    # seed で色相を振り、複数枚が並んでも区別しやすくする
+    hues = [(214, 224, 234), (222, 214, 202), (210, 222, 214), (226, 216, 226)]
+    top = hues[seed % len(hues)]
+    bottom = tuple(max(0, c - 46) for c in top)
+    for y in range(h):
+        t = y / max(h - 1, 1)
+        d.line([(0, y), (w, y)],
+               fill=tuple(round(top[i] + (bottom[i] - top[i]) * t) for i in range(3)))
+    # 中央に対角線のプレースホルダー記号
+    inset = min(w, h) * 0.08
+    d.line([(inset, inset), (w - inset, h - inset)], fill=(255, 255, 255), width=2)
+    d.line([(w - inset, inset), (inset, h - inset)], fill=(255, 255, 255), width=2)
+    d.rectangle([inset, inset, w - inset, h - inset], outline=(255, 255, 255), width=2)
+    text = f"{node}  {w}x{h}"
+    d.text((12, 12), text, fill=(255, 255, 255))
+    d.text((12, h - 28), label, fill=(255, 255, 255))
+    img.save(ASSETS / filename)
+
+
+def make_all_photos() -> None:
+    for i, (filename, (w, h, node, label)) in enumerate(PHOTO_SPECS.items()):
+        make_photo(filename, w, h, node, label, seed=i)
+
+
 def make_line_mark() -> None:
     w, h = _px(LINE_W), _px(LINE_H)
     img = Image.new("RGBA", (w, h), (0, 0, 0, 0))
@@ -88,6 +127,8 @@ if __name__ == "__main__":
     make_logo()
     make_hero()
     make_line_mark()
-    for p in sorted(ASSETS.glob("*.png")):
-        with Image.open(p) as im:
-            print(f"{p.name}: {im.size[0]}x{im.size[1]}")
+    make_all_photos()
+    for pattern in ("*.png", "*.jpg"):
+        for p in sorted(ASSETS.glob(pattern)):
+            with Image.open(p) as im:
+                print(f"{p.name}: {im.size[0]}x{im.size[1]}")

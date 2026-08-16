@@ -617,3 +617,205 @@ button {
     font-size: var(--fs-14);
   }
 }
+
+/* ============================================================
+   Section heading（帯装飾バー + 見出し）
+   同一パターンが 6 箇所で繰り返されるため共通コンポーネント化。
+   (846:16232 / 846:16240 / 951:25276 / 1562:28484 / 1568:28592 / 846:16244)
+   各インスタンスの正確な font-size は get_metadata から個別に
+   確認できていないため、Figma 変数「見出し（セクションタイトル2）」＝
+   --fs-24 に統一している。詳細は design-decisions.md。
+   ============================================================ */
+.section-head {
+  margin-bottom: 32px;
+}
+
+.section-head__bar {
+  display: block;
+  width: 48px;
+  height: 4px;
+  margin-bottom: 16px;
+  background: var(--c-accent);
+  border-radius: 2px;
+}
+
+.section-head__title {
+  font-size: var(--fs-24);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-3);
+  color: var(--c-text);
+}
+
+.section-head--inverse .section-head__title { color: var(--c-text-inverse); }
+.section-head--inverse .section-head__bar { background: var(--c-text-inverse); }
+
+.section-head--center {
+  text-align: center;
+}
+
+.section-head--center .section-head__bar { margin-inline: auto; }
+
+/* ============================================================
+   Intro visual band  946:17694 / 945:17634 / 835:16212
+   Hero 直下、Step 群の前にある写真+リード文の帯。
+   Figma に play ボタン等の vector は見当たらず動画の確証がないため、
+   写真として実装（design-decisions.md 参照）。
+   ============================================================ */
+.intro {
+  padding-block: 56px;
+  background: var(--c-surface);
+}
+
+.intro__media {
+  margin: 0 0 32px;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+
+.intro__media img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 838 / 540;
+  object-fit: cover;
+}
+
+.intro__lead {
+  max-width: 940px;
+  margin-inline: auto;
+  font-size: var(--fs-16);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-1);
+  text-align: center;
+  color: var(--c-text);
+}
+
+/* ============================================================
+   Step 帯（827:53644 Step1 / 846:16242 Step2 / 841:16218 Step3）
+   写真とテキストが左右交互。--reverse で反転する。
+   SP は常に「写真 → テキスト」の順で縦積み（交互配置を単純化）。
+   ============================================================ */
+.step { background: var(--c-surface-subtle); }
+
+.step + .step { border-top: 1px solid rgba(0, 0, 0, .06); }
+
+.step__inner {
+  display: flex;
+  align-items: center;
+  gap: 56px;
+  padding-block: 48px;
+}
+
+.step--reverse .step__inner { flex-direction: row-reverse; }
+
+.step__media {
+  flex: 0 0 45%;
+  margin: 0;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+
+.step__media img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.step__text { flex: 1 1 auto; min-width: 0; }
+
+.step__label {
+  font-size: var(--fs-16);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-2);
+  color: var(--c-accent);
+}
+
+.step__title {
+  margin-top: 8px;
+  font-size: var(--fs-24);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-3);
+  color: var(--c-text);
+}
+
+.step__body {
+  margin-top: 16px;
+  font-size: var(--fs-14);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-4);
+  color: var(--c-text);
+}
+
+.step__features {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.feature {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.feature__icon {
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  color: var(--c-icon);
+  background: var(--c-surface);
+  border-radius: var(--radius-round);
+  stroke-width: 1.75;
+}
+
+.feature p {
+  font-size: var(--fs-12);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-1);
+  color: var(--c-text);
+}
+
+/* ---- ~900px ---- */
+@media (max-width: 900px) {
+  .section-head__title { font-size: var(--fs-20); }
+
+  .step__inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 24px;
+    padding-block: 32px;
+  }
+
+  /* 左右交互をやめ、常に写真 → テキストの順で縦積み */
+  .step--reverse .step__inner { flex-direction: column; }
+
+  .step__media { flex-basis: auto; }
+
+  .step__features {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ---- ~600px ---- */
+@media (max-width: 600px) {
+  .intro { padding-block: 36px; }
+  .intro__lead { font-size: var(--fs-14); }
+
+  .step__title { font-size: var(--fs-20); }
+
+  .step__features {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .feature {
+    flex-direction: row;
+    align-items: center;
+  }
+}
