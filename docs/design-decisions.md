@@ -110,3 +110,58 @@ Figma は親ブロックに `0.36px` を絶対値で当てており、
 完全一致、24px 側は `--ls-2` (.02em = 0.48px) となり 0.12px/字ぶん広い。
 `RECRUIT` 7 文字で合計 0.84px の差で、視認できる差ではないと判断した。
 厳密一致が必要なら `--ls-1_5: .015em` を足す。
+
+---
+
+## 2026-08-16 専用リポジトリ `initialey/musashi` への切り出し
+
+### 経緯
+
+このマークアップは当初、別プロジェクト（AI Bet Tracker）のリポジトリ内に
+`mockups/musashi-recruit/` として同居していた。クライアント名を含む成果物が
+無関係なリポジトリの履歴に残る状態だったため、専用の private リポジトリへ分離した。
+
+`git filter-repo` で該当パスのコミットだけを抽出し、履歴を保持したまま root に配置している。
+
+```
+git filter-repo --force \
+  --path mockups/musashi-recruit/ \
+  --path docs/design-decisions.md \
+  --path-rename mockups/musashi-recruit/:
+```
+
+`--subdirectory-filter` ではなく `--path` を並べたのは、`docs/design-decisions.md` が
+`mockups/` の外にあり、`--subdirectory-filter` だと落ちてしまうため。
+この記録自体もクライアント案件の判断ログなので、コードと一緒に移す必要があった。
+
+### パスの読み替え
+
+上の 2026-08-16「トークン体系の一本化」エントリは同居していた頃に書いたもので、
+`mockups/musashi-recruit/...` 表記が残っている。**このリポジトリでは
+`mockups/musashi-recruit/` を root に読み替える**（例: `mockups/musashi-recruit/assets/README.md`
+→ `assets/README.md`）。
+
+過去エントリを書き換えていないのは、`CLAUDE.md` の運用ルール
+「追記のみ。過去のエントリは書き換えない」に従ったため。
+当時の記述をそのまま残し、現在地は新しいエントリで示す。
+
+### リポジトリ名を `musashi-recruit` ではなく `musashi` にした理由
+
+元の Figma ファイルは採用サイトだけでなくコーポレート側
+（サービス紹介・設備・拠点・事例紹介・お客様の声・会社情報）も含む。
+`-recruit` を付けると、コーポレート側のページを起こしたときに名前が実態からずれるため、
+武蔵通商案件全体の傘として `musashi` にした。
+
+### 分離元に残した措置
+
+AI Bet Tracker 側では、クライアント名を含むコミットが乗っていたのは
+作業用フィーチャーブランチのみで、既定ブランチ `master` には一度も入っていなかった。
+そのためリポジトリ全体の履歴書き換え（`filter-repo` + master の force-push）は行わず、
+**フィーチャーブランチの削除**で対応した。
+
+`master` は 30 分おきに bot コミットが積まれる稼働中のリポジトリで、
+全 SHA を書き換えると実行中のワークフローと競合する実害があるため。
+到達可能な履歴からクライアント名入りのコミットが消えるという結果は同じ。
+
+なお force-push / ブランチ削除の後も、コミットは一定期間 SHA 指定で
+GitHub API から到達可能。完全消去が要件なら GitHub Support への purge 依頼が必要になる。
