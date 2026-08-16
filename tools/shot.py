@@ -51,6 +51,12 @@ EXPECTED_1280 = {
     "voice bubble font-size": (16, 0),
     "voice body font-size": (14, 0),
     "voice media width": (402, 0),
+    # -- チャンク3 --
+    "stat card count": (6, 0),
+    "stat value font-size": (48, 0),
+    "job card count": (3, 0),
+    "job row count": (11, 0),
+    "job tag font-size": (11, 0),
 }
 
 MEASURE_JS = """
@@ -86,6 +92,11 @@ MEASURE_JS = """
     'voice bubble font-size': px(cs(q('.voice__bubble')).fontSize),
     'voice body font-size': px(cs(q('.voice__body')).fontSize),
     'voice media width': q('.voice__media').getBoundingClientRect().width,
+    'stat card count': document.querySelectorAll('.stat-card').length,
+    'stat value font-size': px(cs(q('.stat-card__value')).fontSize),
+    'job card count': document.querySelectorAll('.job-card').length,
+    'job row count': document.querySelectorAll('.job-row').length,
+    'job tag font-size': px(cs(q('.job-row .job-tag')).fontSize),
     '_font': cs(document.body).fontFamily,
     '_fontLoaded': document.fonts.check('700 48px "Noto Sans JP"'),
     '_docScrollW': document.documentElement.scrollWidth,
