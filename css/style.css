@@ -1136,3 +1136,154 @@ button {
 
   .job-row .job-tag { flex: 0 0 auto; }
 }
+
+/* ============================================================
+   Photo card（写真カード共通コンポーネント）
+   福利厚生・社内活動の 5 サブセクション（計 22 枚）で使い回す。
+   写真寸法は 319〜322 × 240〜242 とノードごとに微妙にばらつくため、
+   320×240 (4:3) に正規化して統一している。
+   ============================================================ */
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px 20px;
+  margin-top: 32px;
+}
+
+.photo-card { min-width: 0; }
+
+.photo-card__media {
+  margin: 0;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+
+.photo-card__media img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.photo-card__title {
+  margin: 16px 0 0;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-1);
+  color: var(--c-text);
+}
+
+.photo-card__desc {
+  margin: 8px 0 0;
+  font-size: var(--fs-12);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-1);
+  color: var(--c-text-muted);
+}
+
+/* ============================================================
+   Welfare（福利厚生・社内活動） 1380:26092 ほか
+   5 サブセクション、それぞれ .photo-grid を内包。
+   ============================================================ */
+.welfare { padding-block: 64px; }
+
+.welfare-sub { margin-top: 56px; }
+
+.welfare-sub:first-of-type { margin-top: 40px; }
+
+.welfare-sub__title {
+  padding-left: 16px;
+  border-left: 4px solid var(--c-accent);
+  font-size: var(--fs-24);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-3);
+  color: var(--c-text);
+}
+
+/* ---- ~900px ---- */
+@media (max-width: 900px) {
+  .welfare { padding-block: 48px; }
+  .welfare-sub { margin-top: 40px; }
+  .photo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* ---- ~600px ---- */
+@media (max-width: 600px) {
+  .photo-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .welfare-sub__title { font-size: var(--fs-20); }
+}
+
+/* ============================================================
+   Footer  952:25851
+   Figma 上は未展開の instance ノードで内部構造が取得できなかったため、
+   既存の header nav / localnav の情報から一般的な構成で再構築している
+   （design-decisions.md 参照）。
+   ============================================================ */
+.site-footer {
+  background: var(--c-surface-dark);
+  color: var(--c-text-inverse);
+}
+
+.site-footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 32px;
+  padding-block: 48px;
+}
+
+.site-footer__brand { max-width: 420px; }
+
+.site-footer__logo {
+  width: 150px;
+  height: 39px;
+  object-fit: contain;
+}
+
+.site-footer__tagline {
+  margin-top: 16px;
+  font-size: var(--fs-12);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-4);
+  color: rgba(255, 255, 255, .75);
+}
+
+.site-footer__nav {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 32px;
+}
+
+.site-footer__nav a {
+  font-size: var(--fs-13);
+  letter-spacing: var(--ls-4);
+  color: var(--c-text-inverse);
+}
+
+.site-footer__nav a:hover { color: var(--c-accent); }
+
+.site-footer__copyright {
+  margin: 0;
+  padding: 16px var(--gutter);
+  border-top: 1px solid rgba(255, 255, 255, .12);
+  font-size: var(--fs-11);
+  letter-spacing: var(--ls-4);
+  text-align: center;
+  color: rgba(255, 255, 255, .6);
+}
+
+/* ---- ~600px ---- */
+@media (max-width: 600px) {
+  .site-footer__inner {
+    flex-direction: column;
+    padding-block: 32px;
+  }
+
+  .site-footer__nav { grid-template-columns: 1fr; }
+}

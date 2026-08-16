@@ -57,6 +57,11 @@ EXPECTED_1280 = {
     "job card count": (3, 0),
     "job row count": (11, 0),
     "job tag font-size": (11, 0),
+    # -- チャンク4 --
+    "photo card count": (22, 0),
+    "photo card title font-size": (16, 0),
+    "welfare sub count": (5, 0),
+    "footer visible": (1, 0),
 }
 
 MEASURE_JS = """
@@ -97,6 +102,10 @@ MEASURE_JS = """
     'job card count': document.querySelectorAll('.job-card').length,
     'job row count': document.querySelectorAll('.job-row').length,
     'job tag font-size': px(cs(q('.job-row .job-tag')).fontSize),
+    'photo card count': document.querySelectorAll('.photo-card').length,
+    'photo card title font-size': px(cs(q('.photo-card__title')).fontSize),
+    'welfare sub count': document.querySelectorAll('.welfare-sub').length,
+    'footer visible': q('.site-footer').getBoundingClientRect().height > 0 ? 1 : 0,
     '_font': cs(document.body).fontFamily,
     '_fontLoaded': document.fonts.check('700 48px "Noto Sans JP"'),
     '_docScrollW': document.documentElement.scrollWidth,

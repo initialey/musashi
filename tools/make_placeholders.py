@@ -41,6 +41,35 @@ PHOTO_SPECS = {
     "job-top3.jpg": (319, 200, "1383:47090", "レア3 大本山の鐘"),
 }
 
+# チャンク4: 福利厚生・社内活動（5サブセクション、計22枚）
+# 実寸は 319〜322×240〜242 とノードごとに微妙に異なるため
+# 320×240(4:3) に正規化。ノードID未特定の col2 は "推定" と付記。
+WELFARE_SPECS = {
+    "welfare1-1.jpg": "1562:28489 福利厚生サービス",
+    "welfare1-2.jpg": "1562:28493(推定) 育休取得実績",
+    "welfare1-3.jpg": "1562:28495 年間休日120日",
+    "welfare1-4.jpg": "1568:28508 有給取得日数",
+    "welfare1-5.jpg": "1568:28516 医療相談サービス",
+    "welfare1-6.jpg": "1571:28652 提携ローン",
+    "welfare2-1.jpg": "1568:28518 BBQ大会",
+    "welfare2-2.jpg": "1568:28522(推定) 忘年会",
+    "welfare2-3.jpg": "1568:28530 新入社員歓迎食事会",
+    "welfare2-4.jpg": "1568:28524 周年行事",
+    "welfare2-5.jpg": "1568:28528(推定) チームビルディング",
+    "welfare2-6.jpg": "1568:28532 ビンゴ大会",
+    "welfare3-1.jpg": "1571:28644 西武ライオンズ観戦",
+    "welfare3-2.jpg": "1568:28569 東京ワイルズ観戦",
+    "welfare4-1.jpg": "1568:28557 3110ファイトクラブ",
+    "welfare4-2.jpg": "1718:24123 サバゲー部",
+    "welfare5-1.jpg": "1568:28602 資格認定証授与式",
+    "welfare5-2.jpg": "1568:28579(推定) 社内業績表彰制度",
+    "welfare5-3.jpg": "1568:28588 社内勉強会",
+    "welfare5-4.jpg": "1568:28581 業務改善提案活動",
+    "welfare5-5.jpg": "1568:28586(推定) eラーニング",
+    "welfare5-6.jpg": "1568:28591 技術力アップ研修",
+}
+WELFARE_W, WELFARE_H = 320, 240
+
 SCALE = 2
 
 
@@ -89,6 +118,22 @@ def make_hero() -> None:
     img.save(ASSETS / "hero.png")
 
 
+def make_logo_white() -> None:
+    """フッター用の白抜きロゴプレースホルダ。
+
+    通常ロゴに CSS の brightness(0) invert(1) をかけると、淡いグレーの
+    塗りごと単色の白ブロックに潰れてしまう(ロゴ内部の階調が失われる)ため、
+    暗い背景でもディテールが残る専用のプレースホルダを別途用意する。
+    """
+    w, h = _px(LOGO_W), _px(LOGO_H)
+    img = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    d.rounded_rectangle([0, 0, w - 1, h - 1], radius=6, outline=(255, 255, 255, 220), width=2)
+    d.ellipse([8, 10, 8 + h - 20, 10 + h - 20], outline=(255, 255, 255, 220), width=4)
+    d.text((h + 2, h // 2 - 9), "LOGO 150x39", fill=(255, 255, 255, 220))
+    img.save(ASSETS / "logo-white.png")
+
+
 def make_photo(filename: str, w: int, h: int, node: str, label: str,
                 seed: int = 0) -> None:
     """汎用の写真プレースホルダ。実寸ジオメトリを維持し、
@@ -117,6 +162,8 @@ def make_photo(filename: str, w: int, h: int, node: str, label: str,
 def make_all_photos() -> None:
     for i, (filename, (w, h, node, label)) in enumerate(PHOTO_SPECS.items()):
         make_photo(filename, w, h, node, label, seed=i)
+    for i, (filename, label) in enumerate(WELFARE_SPECS.items()):
+        make_photo(filename, WELFARE_W, WELFARE_H, "", label, seed=i)
 
 
 def make_line_mark() -> None:
@@ -136,6 +183,7 @@ def make_line_mark() -> None:
 if __name__ == "__main__":
     ASSETS.mkdir(parents=True, exist_ok=True)
     make_logo()
+    make_logo_white()
     make_hero()
     make_line_mark()
     make_all_photos()

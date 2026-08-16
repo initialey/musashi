@@ -565,7 +565,198 @@
     </div>
   </section>
 
+  <!-- ======================================================
+       福利厚生・社内活動  1380:26092 ほか
+       写真は 22 枚とも実寸が 319〜322×240〜242 とノードごとに微妙に
+       異なるため 320×240(4:3) に正規化。col2 の写真は複数箇所で
+       Figma 上に個別命名されたノードが見当たらなかったが、見出し・
+       説明文が存在し3カラムグリッドの一部であることは確実なため、
+       同じ .photo-card で統一実装している。
+       ====================================================== -->
+  <section class="welfare" data-figma-node="1380:26092">
+    <div class="l-container">
+      <div class="section-head">
+        <span class="section-head__bar" aria-hidden="true"></span>
+        <h2 class="section-head__title">福利厚生・社内活動</h2>
+      </div>
+
+      <!-- 1. 福利厚生・ワークライフバランス -->
+      <div class="welfare-sub" data-figma-node="1562:28484">
+        <h3 class="welfare-sub__title">1. 福利厚生・ワークライフバランス</h3>
+        <div class="photo-grid">
+          <article class="photo-card" data-figma-node="1562:28489">
+            <figure class="photo-card__media"><img src="assets/welfare1-1.jpg" width="320" height="240" alt=""></figure>
+            <h4 class="photo-card__title">福利厚生サービスに加入</h4>
+            <p class="photo-card__desc">宿泊やレジャーの会員割引と、育児・介護の補助制度があります。</p>
+          </article>
+          <article class="photo-card" data-figma-node="1562:28493">
+            <figure class="photo-card__media"><img src="assets/welfare1-2.jpg" width="320" height="240" alt=""></figure>
+            <h4 class="photo-card__title">男性社員の育休取得実績</h4>
+            <p class="photo-card__desc">休みにくい物流業ですが、弊社は男性でも育児休暇取得実績があります。</p>
+          </article>
+          <article class="photo-card" data-figma-node="1562:28495">
+            <figure class="photo-card__media"><img src="assets/welfare1-3.jpg" width="320" height="240" alt=""></figure>
+            <h4 class="photo-card__title">年間休日120日</h4>
+            <p class="photo-card__desc">現場職でも年間124日の休日があります。武蔵通商なら家族との時間、趣味の時間をとりながら、働くことが出来ます。</p>
+          </article>
+          <article class="photo-card" data-figma-node="1568:28508">
+            <figure class="photo-card__media"><img src="assets/welfare1-4.jpg" width="320" height="240" alt=""></figure>
+            <h4 class="photo-card__title">平均有給取得日数　10.8日</h4>
+            <p class="photo-card__desc">有給休暇も取得しやすく、平均取得日数は10.8日。仕事とプライベートを両立しながら、安心して長く働ける環境です。</p>
+          </article>
+          <article class="photo-card" data-figma-node="1568:28516">
+            <figure class="photo-card__media"><img src="assets/welfare1-5.jpg" width="320" height="240" alt=""></figure>
+            <h4 class="photo-card__title">医療機関への無料相談サービス</h4>
+            <p class="photo-card__desc">家族を含めて病気や体調不良の際に24時間体制で、医師に相談することが可能です。重い病気の際には適正な病院の紹介や、受診の申し込みまで代行します。</p>
+          </article>
+          <article class="photo-card" data-figma-node="1571:28652">
+            <figure class="photo-card__media"><img src="assets/welfare1-6.jpg" width="320" height="240" alt=""></figure>
+            <h4 class="photo-card__title">取引金融機関でのローンが有利な条件に</h4>
+            <p class="photo-card__desc">当社の取引金融機関での有利な条件で提携ローンの申し込みが可能になります。</p>
+          </article>
+        </div>
+      </div>
+
+      <!-- 2. 社内イベント・親睦活動 -->
+      <div class="welfare-sub" data-figma-node="1562:28486">
+        <h3 class="welfare-sub__title">2. 社内イベント・親睦活動</h3>
+        <div class="photo-grid">
+          <article class="photo-card" data-figma-node="1568:28518">
+            <figure class="photo-card__media"><img src="assets/welfare2-1.jpg" width="320" height="240" alt=""></figure>
+            <h4 class="photo-card__title">BBQ大会</h4>
+            <p class="photo-card__desc">年に一度BBQ大会を開催し、様々なゲームで親睦を深めています。</p>
+          </article>
+          <article class="photo-card" data-figma-node="1568:28522">
+            <figure class="photo-card__media"><img src="assets/welfare2-2.jpg" width="320" height="240" alt=""></figure>
+            <h4 class="photo-card__title">忘年会</h4>
+            <p class="photo-card__desc">毎年工夫を凝らした忘年会を開催し、団結力を高めています。</p>
+          </article>
+          <!-- 新入社員歓迎食事会: Figma上の説明文(1568:28541)は「忘年会」の説明文と
+               完全一致しており、元データ側のコピー&ペースト起因の重複と判断。
+               同じ文言を流用すると独自の誤りに見えるため、見出しの内容に沿う
+               説明文を代わりに補っている（要クライアント確認）。 -->
+          <article class="photo-card" data-figma-node="1568:28530" data-placeholder="true">
+            <figure class="photo-card__media"><img src="assets/welfare2-3.jpg" width="320" height="240" alt=""></figure>
+            <h4 class="photo-card__title">新入社員歓迎食事会</h4>
+            <p class="photo-card__desc">新しく入社した仲間を歓迎する食事会を開催し、早期の職場定着をサポートしています。</p>
+          </article>
+          <article class="photo-card" data-figma-node="1568:28524">
+            <figure class="photo-card__media"><img src="assets/welfare2-4.jpg" width="320" height="240" alt=""></figure>
+            <h4 class="photo-card__title">節目の周年行事</h4>
+            <p class="photo-card__desc">創立50周年の際には記念行事を開催し、全社員で未来を共有しています。</p>
+          </article>
+          <article class="photo-card" data-figma-node="1568:28528">
+            <figure class="photo-card__media"><img src="assets/welfare2-5.jpg" width="320" height="240" alt=""></figure>
+            <h4 class="photo-card__title">チームビルディングイベント</h4>
+            <p class="photo-card__desc">記念行事等でチームビルディングのイベントを行い、協調性や業務の質を高めています。</p>
+          </article>
+          <article class="photo-card" data-figma-node="1568:28532">
+            <figure class="photo-card__media"><img src="assets/welfare2-6.jpg" width="320" height="240" alt=""></figure>
+            <h4 class="photo-card__title">ビンゴ大会</h4>
+            <p class="photo-card__desc">年末の納会に合わせてビンゴ大会を行っています。</p>
+          </article>
+        </div>
+      </div>
+
+      <!-- 3. スポーツ観戦（Figma上、カードは2枚のみ） -->
+      <div class="welfare-sub" data-figma-node="1568:28568">
+        <h3 class="welfare-sub__title">3. スポーツ観戦</h3>
+        <div class="photo-grid">
+          <article class="photo-card" data-figma-node="1571:28644">
+            <figure class="photo-card__media"><img src="assets/welfare3-1.jpg" width="320" height="240" alt=""></figure>
+            <h4 class="photo-card__title">西武ライオンズ観戦</h4>
+            <p class="photo-card__desc">会社としてスポンサーになっており、シーズン中は毎月希望者に抽選でペアチケットをプレゼントします。</p>
+          </article>
+          <article class="photo-card" data-figma-node="1568:28569">
+            <figure class="photo-card__media"><img src="assets/welfare3-2.jpg" width="320" height="240" alt=""></figure>
+            <h4 class="photo-card__title">東京ワイルズ観戦</h4>
+            <p class="photo-card__desc">アイスホッケーのプロチーム「東京ワイルズ」に所属する二刀流社員を社員で応援しにいきます。</p>
+          </article>
+        </div>
+      </div>
+
+      <!-- 4. 部活動（Figma上、3枚目のカードは hidden="true" のため非表示） -->
+      <div class="welfare-sub" data-figma-node="1596:28221">
+        <h3 class="welfare-sub__title">4. 部活動</h3>
+        <div class="photo-grid">
+          <article class="photo-card" data-figma-node="1568:28557">
+            <figure class="photo-card__media"><img src="assets/welfare4-1.jpg" width="320" height="240" alt=""></figure>
+            <h4 class="photo-card__title">3110ファイトクラブ</h4>
+            <p class="photo-card__desc">トレーニングや格闘技を通して、 健康的な体を目指します。</p>
+          </article>
+          <article class="photo-card" data-figma-node="1718:24123">
+            <figure class="photo-card__media"><img src="assets/welfare4-2.jpg" width="320" height="240" alt=""></figure>
+            <h4 class="photo-card__title">サバゲー部</h4>
+            <p class="photo-card__desc">サバゲーを通して活動し、チームワークや協調性を高めています。</p>
+          </article>
+        </div>
+      </div>
+
+      <!-- 5. 教育研修・スキルアップ -->
+      <div class="welfare-sub" data-figma-node="1568:28592">
+        <h3 class="welfare-sub__title">5. 教育研修・スキルアップ</h3>
+        <div class="photo-grid">
+          <article class="photo-card" data-figma-node="1568:28602">
+            <figure class="photo-card__media"><img src="assets/welfare5-1.jpg" width="320" height="240" alt=""></figure>
+            <h4 class="photo-card__title">資格認定証授与式</h4>
+            <p class="photo-card__desc">資格認定証授与式を執り行い、社員の技術向上を称えています。</p>
+          </article>
+          <article class="photo-card" data-figma-node="1568:28579">
+            <figure class="photo-card__media"><img src="assets/welfare5-2.jpg" width="320" height="240" alt=""></figure>
+            <h4 class="photo-card__title">社内業績表彰制度</h4>
+            <p class="photo-card__desc">優秀な実績や積極的な提案を表彰し、社員のモチベーションを高めています。</p>
+          </article>
+          <article class="photo-card" data-figma-node="1568:28588">
+            <figure class="photo-card__media"><img src="assets/welfare5-3.jpg" width="320" height="240" alt=""></figure>
+            <h4 class="photo-card__title">社内勉強会</h4>
+            <p class="photo-card__desc">継続的な安全衛生教育や危険予知訓練で安全意識を高めています。</p>
+          </article>
+          <article class="photo-card" data-figma-node="1568:28581">
+            <figure class="photo-card__media"><img src="assets/welfare5-4.jpg" width="320" height="240" alt=""></figure>
+            <h4 class="photo-card__title">業務改善提案活動</h4>
+            <p class="photo-card__desc">品質、業務効率、職場環境に特に貢献した提案を表彰します。毎月実施しており、豪華景品をお渡しします。</p>
+          </article>
+          <article class="photo-card" data-figma-node="1568:28586">
+            <figure class="photo-card__media"><img src="assets/welfare5-5.jpg" width="320" height="240" alt=""></figure>
+            <h4 class="photo-card__title">eラーニング受講し放題</h4>
+            <p class="photo-card__desc">自分で希望したeラーニングを個人負担なしで受講することができます。</p>
+          </article>
+          <article class="photo-card" data-figma-node="1568:28591">
+            <figure class="photo-card__media"><img src="assets/welfare5-6.jpg" width="320" height="240" alt=""></figure>
+            <h4 class="photo-card__title">部署別の技術力アップ研修</h4>
+            <p class="photo-card__desc">各部署ごとに必要な専門スキルを磨くための、研修を定期的に行っています。</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </main>
+
+<!-- ========================================================
+     Footer  952:25851
+     Figma上は未展開のinstanceノードで内部構造を取得できなかったため、
+     header nav / localnav の既知情報から一般的な構成で再構築
+     ======================================================== -->
+<footer class="site-footer" data-figma-node="952:25851">
+  <div class="l-container site-footer__inner">
+    <div class="site-footer__brand">
+      <img class="site-footer__logo" src="assets/logo-white.png" width="150" height="39" alt="武蔵通商株式会社">
+      <p class="site-footer__tagline">精密機械や美術品の 全国輸送・梱包・保管は、信頼と実績の武蔵通商へ</p>
+    </div>
+    <nav class="site-footer__nav" aria-label="フッターナビゲーション">
+      <a href="/">TOP</a>
+      <a href="/service/">サービス紹介</a>
+      <a href="/facility/">設備・拠点</a>
+      <a href="/works/">事例紹介</a>
+      <a href="/voice/">お客様の声</a>
+      <a href="/company/">会社情報</a>
+      <a href="/news/">最新情報</a>
+      <a href="/recruit/">採用情報</a>
+    </nav>
+  </div>
+  <p class="site-footer__copyright">&copy; Musashi Tsusho Co., Ltd.</p>
+</footer>
 
 <!-- ========================================================
      LINE floating CTA  952:25691
