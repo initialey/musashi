@@ -6,8 +6,10 @@
    実装ルール
    - Figma の絶対座標は採用しない。全幅帯 + max-width:1040px の
      縦積みで再構築する。1px のズレ(x=-4 / w=1281 等)は正規化。
+   - 色・文字・角丸・余白は css/tokens.css の変数だけを参照し、
+     このファイルには生値を書かない。
    - アイコンは lucide に統一（Iconify 混在をこちらへ寄せる）。
-   - SP は自社設計。3カラム→1カラム、横並びは折返し or 2カラム。
+   - SP は自社設計。3カラム→1カラム、横並びは折返し or グリッド。
    ============================================================ */
 
 /* ---------- reset ---------- */
@@ -24,7 +26,7 @@ body {
   font-size: var(--fs-16);
   line-height: var(--lh-body);
   color: var(--c-text);
-  background: #fff;
+  background: var(--c-surface);
 }
 
 img,
@@ -94,7 +96,7 @@ button {
   display: flex;
   align-items: stretch;
   min-height: 53px;
-  background: #fff;
+  background: var(--c-surface);
 }
 
 .header-brand {
@@ -116,7 +118,7 @@ button {
   font-size: var(--fs-12);
   line-height: var(--lh-heading);
   letter-spacing: var(--ls-4);
-  color: #000;
+  color: var(--c-text-strong);
 }
 
 .header-top__spacer { flex: 1 1 auto; }
@@ -126,11 +128,11 @@ button {
   align-items: center;
   gap: 8px;
   padding: 0 22px;
-  background: var(--c-utility-bg);
+  background: var(--c-surface-subtle);
 }
 
 .header-tel__icon {
-  font-size: 24px;
+  font-size: var(--fs-24);
   color: var(--c-brand);
 }
 
@@ -139,7 +141,7 @@ button {
   white-space: nowrap;
   font-size: var(--fs-20);
   font-weight: var(--fw-bold);
-  line-height: 1.2;
+  line-height: var(--lh-tight);
   letter-spacing: var(--ls-8);
   color: var(--c-brand);
 }
@@ -147,9 +149,9 @@ button {
 .header-tel__hours {
   display: block;
   font-size: var(--fs-10);
-  line-height: 1.2;
+  line-height: var(--lh-tight);
   letter-spacing: var(--ls-6);
-  color: var(--c-muted);
+  color: var(--c-text-muted);
 }
 
 .header-cta {
@@ -161,18 +163,18 @@ button {
   flex: none;
   padding-inline: 16px;
   background: var(--g-cta);
-  color: #fff;
+  color: var(--c-text-inverse);
   font-size: var(--fs-13);
   text-align: left;
 }
 
-.header-cta .icon { font-size: 24px; }
+.header-cta .icon { font-size: var(--fs-24); }
 
 .header-cta:hover { filter: brightness(1.12); }
 
 /* ---- 下段: グローバルナビ ---- */
 .header-nav {
-  background: var(--c-gnav-bg);
+  background: var(--c-overlay-dark);
   backdrop-filter: blur(2px);
 }
 
@@ -198,14 +200,14 @@ button {
   align-items: center;
   gap: 4px;
   padding: 12px 20px;
-  color: #fff;
+  color: var(--c-text-inverse);
   font-size: var(--fs-13);
   line-height: var(--lh-heading);
   letter-spacing: var(--ls-4);
   white-space: nowrap;
 }
 
-.gnav__link .icon { font-size: 16px; }
+.gnav__link .icon { font-size: var(--fs-16); }
 
 .gnav__link:hover { color: var(--c-accent); }
 
@@ -218,7 +220,7 @@ button {
 
 .header-utility a {
   padding: 12px 20px;
-  color: #fff;
+  color: var(--c-text-inverse);
   font-size: var(--fs-11);
   line-height: var(--lh-heading);
   letter-spacing: var(--ls-4);
@@ -234,12 +236,12 @@ button {
   gap: 8px;
   margin-left: auto;
   padding: 12px 4px;
-  color: #fff;
+  color: var(--c-text-inverse);
   font-size: var(--fs-12);
   letter-spacing: var(--ls-4);
 }
 
-.nav-toggle .icon { font-size: 24px; }
+.nav-toggle .icon { font-size: var(--fs-24); }
 
 .nav-toggle__close { display: none; }
 
@@ -251,11 +253,11 @@ button {
   position: relative;
   isolation: isolate;
   background: var(--c-hero-base);
-  color: #fff;
+  color: var(--c-text-inverse);
   overflow: hidden;
 }
 
-/* 841:16191 = bg #5e5e5e に写真を mix-blend-multiply / opacity .8 / 下寄せ */
+/* 841:16191 = 下地 #5e5e5e に写真を mix-blend-multiply / opacity .8 / 下寄せ */
 .hero__bg {
   position: absolute;
   inset: 0;
@@ -271,7 +273,7 @@ button {
 
 /* ---- パンくず (827:53027) ---- */
 .breadcrumb {
-  border-bottom: 1px solid var(--c-rule);
+  border-bottom: 1px solid var(--c-border);
 }
 
 .breadcrumb__list {
@@ -293,9 +295,12 @@ button {
 
 .breadcrumb__list a:hover { color: var(--c-accent); }
 
-.breadcrumb__sep { font-size: 12px; color: #fff; }
+.breadcrumb__sep {
+  font-size: var(--fs-12);
+  color: var(--c-text-inverse);
+}
 
-.breadcrumb__current { color: var(--c-breadcrumb-current); }
+.breadcrumb__current { color: var(--c-text-on-dark-muted); }
 
 /* ---- hero 本文 ---- */
 .hero__body {
@@ -314,12 +319,12 @@ button {
   height: 0;
   margin: 28px 0 0;
   border: 0;
-  border-top: 1px solid var(--c-rule-hero);
+  border-top: 1px solid var(--c-border-hero);
 }
 
 .hero__title {
   margin-top: 29px;
-  font-size: var(--fs-hero);
+  font-size: var(--fs-48);
   font-weight: var(--fw-bold);
   line-height: var(--lh-heading);
   letter-spacing: var(--ls-4);
@@ -337,8 +342,8 @@ button {
    Local nav  (952:25670)
    ============================================================ */
 .localnav {
-  background: var(--c-localnav-bg);
-  color: #fff;
+  background: var(--c-brand-navy);
+  color: var(--c-text-inverse);
 }
 
 .localnav__inner {
@@ -356,7 +361,7 @@ button {
   font-size: var(--fs-24);
   font-weight: var(--fw-bold);
   line-height: var(--lh-heading);
-  letter-spacing: .36px;
+  letter-spacing: var(--ls-2);
 }
 
 .localnav__brand-ja {
@@ -364,7 +369,7 @@ button {
   font-size: var(--fs-12);
   font-weight: var(--fw-bold);
   line-height: var(--lh-heading);
-  letter-spacing: .36px;
+  letter-spacing: var(--ls-3);
 }
 
 .localnav__list {
@@ -380,8 +385,8 @@ button {
   justify-content: center;
   min-height: 46px;
   padding: 8px 22px;
-  background: var(--c-localnav-pill);
-  border: 1px solid var(--c-localnav-pill);
+  background: var(--c-brand-light);
+  border: 1px solid var(--c-brand-light);
   border-radius: var(--radius-pill);
   font-size: var(--fs-16);
   font-weight: var(--fw-medium);
@@ -398,7 +403,7 @@ button {
 
 .localnav__link[aria-current="page"] {
   background: var(--c-brand);
-  border-color: #fff;
+  border-color: var(--c-text-inverse);
 }
 
 /* ============================================================
@@ -416,9 +421,9 @@ button {
   gap: 4px;
   width: 87px;
   padding: 6px 8px 12px;
-  background: var(--c-line-green);
+  background: var(--c-line-brand);
   border-radius: var(--radius-pill) 0 0 var(--radius-pill);
-  color: #fff;
+  color: var(--c-text-inverse);
   text-align: center;
 }
 
@@ -433,7 +438,7 @@ button {
 .line-cta__text {
   font-size: var(--fs-18);
   font-weight: var(--fw-bold);
-  line-height: 1.4;
+  line-height: var(--lh-snug);
 }
 
 .line-cta__text small {
@@ -444,7 +449,7 @@ button {
 .line-cta__text b {
   display: block;
   font-weight: var(--fw-bold);
-  letter-spacing: -.09em;
+  letter-spacing: var(--ls-tight);
 }
 
 /* ============================================================
@@ -473,7 +478,7 @@ button {
     right: 0;
     z-index: var(--z-drawer);
     padding: 4px var(--gutter) 12px;
-    background: var(--c-bg-dark);
+    background: var(--c-surface-dark);
   }
 
   .site-header[data-nav-open="true"] .header-drawer { display: block; }
@@ -489,7 +494,7 @@ button {
   .gnav__link,
   .header-utility a {
     padding: 14px 4px;
-    border-bottom: 1px solid rgba(255, 255, 255, .15);
+    border-bottom: 1px solid var(--c-border-drawer);
     font-size: var(--fs-14);
   }
 
@@ -499,11 +504,11 @@ button {
   .site-header[data-nav-open="true"] .nav-toggle__close { display: block; }
 }
 
-/* ---- ~900px: hero タイポを縮小 ---- */
+/* ---- ~900px: hero タイポを縮小 / ローカルナビ 3カラム ---- */
 @media (max-width: 900px) {
-  .hero__title { font-size: 36px; }
-  .hero__lead { font-size: 18px; }
-  .hero__label { font-size: 20px; }
+  .hero__title { font-size: var(--fs-36); }
+  .hero__lead { font-size: var(--fs-18); }
+  .hero__label { font-size: var(--fs-20); }
 
   /* ヘッダーは全幅ベタ付けをやめ、本文と同じ gutter に揃える */
   .header-top { padding-inline: var(--gutter); }
@@ -562,13 +567,14 @@ button {
     flex-direction: row;
     width: auto;
     padding: 10px 16px;
-    border-radius: 999px;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, .28);
+    border-radius: var(--radius-round);
+    box-shadow: var(--shadow-float);
   }
 
   .line-cta__mark { width: 28px; height: 28px; }
   .line-cta__text { font-size: var(--fs-14); }
   .line-cta__text small { font-size: var(--fs-12); }
+
   /* 「応 募！」は Figma 上も全角アキ + 負トラッキングで詰めているため、
      1 行組みに変わる SP でもトラッキングは維持する。 */
   .line-cta__text b { display: inline; }
@@ -586,12 +592,12 @@ button {
     padding-inline: 8px;
   }
 
-  .header-tel__icon { font-size: 20px; }
+  .header-tel__icon { font-size: var(--fs-20); }
   .header-tel__num { font-size: var(--fs-14); }
 
   .header-cta { width: 48px; }
 
-  .hero__title { font-size: 28px; }
+  .hero__title { font-size: var(--fs-28); }
   .hero__lead { font-size: var(--fs-16); }
   .hero__label { font-size: var(--fs-16); }
 
@@ -601,7 +607,6 @@ button {
   }
 
   .localnav__list {
-    display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px;
   }
