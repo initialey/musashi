@@ -1,0 +1,614 @@
+/* ============================================================
+   武蔵通商 採用サイト / 下層ページ（採用　会社を知る）
+   Hero 〜 ローカルナビ
+   Figma: 9CJMHGoxwmbhJVxc2AvylL  node 827:52372
+
+   実装ルール
+   - Figma の絶対座標は採用しない。全幅帯 + max-width:1040px の
+     縦積みで再構築する。1px のズレ(x=-4 / w=1281 等)は正規化。
+   - アイコンは lucide に統一（Iconify 混在をこちらへ寄せる）。
+   - SP は自社設計。3カラム→1カラム、横並びは折返し or 2カラム。
+   ============================================================ */
+
+/* ---------- reset ---------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--ff);
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-16);
+  line-height: var(--lh-body);
+  color: var(--c-text);
+  background: #fff;
+}
+
+img,
+svg { display: block; max-width: 100%; }
+
+a { color: inherit; text-decoration: none; }
+
+ul,
+ol { margin: 0; padding: 0; list-style: none; }
+
+h1, p { margin: 0; }
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 2px;
+}
+
+.u-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* 全幅帯の内側コンテナ。全ブロック共通。 */
+.l-container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.icon {
+  width: 1em;
+  height: 1em;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ============================================================
+   Global header  (827:52775 / 827:53027)
+   ============================================================ */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+}
+
+/* ---- 上段: ロゴ / タグライン / 電話 / CTA ---- */
+.header-top {
+  display: flex;
+  align-items: stretch;
+  min-height: 53px;
+  background: #fff;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  padding-left: 4px;
+  min-width: 0;
+}
+
+.header-logo {
+  width: 150px;
+  height: 39px;
+  object-fit: contain;
+  flex: none;
+}
+
+.header-tagline {
+  font-size: var(--fs-12);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-4);
+  color: #000;
+}
+
+.header-top__spacer { flex: 1 1 auto; }
+
+.header-tel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 22px;
+  background: var(--c-utility-bg);
+}
+
+.header-tel__icon {
+  font-size: 24px;
+  color: var(--c-brand);
+}
+
+.header-tel__num {
+  display: block;
+  white-space: nowrap;
+  font-size: var(--fs-20);
+  font-weight: var(--fw-bold);
+  line-height: 1.2;
+  letter-spacing: var(--ls-8);
+  color: var(--c-brand);
+}
+
+.header-tel__hours {
+  display: block;
+  font-size: var(--fs-10);
+  line-height: 1.2;
+  letter-spacing: var(--ls-6);
+  color: var(--c-muted);
+}
+
+.header-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 219px;
+  flex: none;
+  padding-inline: 16px;
+  background: var(--g-cta);
+  color: #fff;
+  font-size: var(--fs-13);
+  text-align: left;
+}
+
+.header-cta .icon { font-size: 24px; }
+
+.header-cta:hover { filter: brightness(1.12); }
+
+/* ---- 下段: グローバルナビ ---- */
+.header-nav {
+  background: var(--c-gnav-bg);
+  backdrop-filter: blur(2px);
+}
+
+.header-nav__inner {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  max-width: 1180px;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.gnav {
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;
+  justify-content: center;
+  gap: 4px;
+}
+
+.gnav__link {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 20px;
+  color: #fff;
+  font-size: var(--fs-13);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-4);
+  white-space: nowrap;
+}
+
+.gnav__link .icon { font-size: 16px; }
+
+.gnav__link:hover { color: var(--c-accent); }
+
+.header-utility {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: none;
+}
+
+.header-utility a {
+  padding: 12px 20px;
+  color: #fff;
+  font-size: var(--fs-11);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-4);
+  white-space: nowrap;
+}
+
+.header-utility a:hover { color: var(--c-accent); }
+
+/* ---- ハンバーガー（狭幅のみ） ---- */
+.nav-toggle {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  padding: 12px 4px;
+  color: #fff;
+  font-size: var(--fs-12);
+  letter-spacing: var(--ls-4);
+}
+
+.nav-toggle .icon { font-size: 24px; }
+
+.nav-toggle__close { display: none; }
+
+/* ============================================================
+   Hero  (841:16191 / 827:53027 / 848:16284 / 848:16285 /
+          835:16198 / 835:16211)
+   ============================================================ */
+.hero {
+  position: relative;
+  isolation: isolate;
+  background: var(--c-hero-base);
+  color: #fff;
+  overflow: hidden;
+}
+
+/* 841:16191 = bg #5e5e5e に写真を mix-blend-multiply / opacity .8 / 下寄せ */
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: bottom;
+  opacity: .8;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+/* ---- パンくず (827:53027) ---- */
+.breadcrumb {
+  border-bottom: 1px solid var(--c-rule);
+}
+
+.breadcrumb__list {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 28px;
+  font-size: var(--fs-11);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-4);
+}
+
+.breadcrumb__list > li {
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumb__list a { text-decoration: underline; }
+
+.breadcrumb__list a:hover { color: var(--c-accent); }
+
+.breadcrumb__sep { font-size: 12px; color: #fff; }
+
+.breadcrumb__current { color: var(--c-breadcrumb-current); }
+
+/* ---- hero 本文 ---- */
+.hero__body {
+  padding-top: 37px;
+  padding-bottom: 52px;
+}
+
+.hero__label {
+  font-size: var(--fs-24);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-3);
+}
+
+.hero__rule {
+  height: 0;
+  margin: 28px 0 0;
+  border: 0;
+  border-top: 1px solid var(--c-rule-hero);
+}
+
+.hero__title {
+  margin-top: 29px;
+  font-size: var(--fs-hero);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-4);
+}
+
+.hero__lead {
+  margin-top: 36px;
+  font-size: var(--fs-21);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-3);
+}
+
+/* ============================================================
+   Local nav  (952:25670)
+   ============================================================ */
+.localnav {
+  background: var(--c-localnav-bg);
+  color: #fff;
+}
+
+.localnav__inner {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  min-height: 87px;
+  padding-block: 14px;
+}
+
+.localnav__brand { flex: none; }
+
+.localnav__brand-en {
+  display: block;
+  font-size: var(--fs-24);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-heading);
+  letter-spacing: .36px;
+}
+
+.localnav__brand-ja {
+  display: block;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-heading);
+  letter-spacing: .36px;
+}
+
+.localnav__list {
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.localnav__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 8px 22px;
+  background: var(--c-localnav-pill);
+  border: 1px solid var(--c-localnav-pill);
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-16);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-2);
+  white-space: nowrap;
+  transition: background-color .15s ease, border-color .15s ease;
+}
+
+.localnav__link:hover {
+  background: var(--c-brand-hover);
+  border-color: var(--c-brand-hover);
+}
+
+.localnav__link[aria-current="page"] {
+  background: var(--c-brand);
+  border-color: #fff;
+}
+
+/* ============================================================
+   LINE floating CTA  (952:25691)
+   ============================================================ */
+.line-cta {
+  position: fixed;
+  top: 46%;
+  right: 0;
+  z-index: var(--z-float);
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 87px;
+  padding: 6px 8px 12px;
+  background: var(--c-line-green);
+  border-radius: var(--radius-pill) 0 0 var(--radius-pill);
+  color: #fff;
+  text-align: center;
+}
+
+.line-cta:hover { filter: brightness(1.06); }
+
+.line-cta__mark {
+  width: 71px;
+  height: 73px;
+  object-fit: contain;
+}
+
+.line-cta__text {
+  font-size: var(--fs-18);
+  font-weight: var(--fw-bold);
+  line-height: 1.4;
+}
+
+.line-cta__text small {
+  font-size: var(--fs-14);
+  font-weight: var(--fw-bold);
+}
+
+.line-cta__text b {
+  display: block;
+  font-weight: var(--fw-bold);
+  letter-spacing: -.09em;
+}
+
+/* ============================================================
+   Responsive — SP は自社設計
+   ============================================================ */
+
+/* 広い画面では .header-drawer は存在しないものとして扱う */
+.header-drawer { display: contents; }
+
+/* ---- ~1080px: グローバルナビをドロワーへ ---- */
+@media (max-width: 1080px) {
+  .nav-toggle { display: flex; }
+
+  .header-nav { position: relative; }
+
+  .header-nav__inner {
+    justify-content: flex-end;
+    min-height: 44px;
+  }
+
+  .header-drawer {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: var(--z-drawer);
+    padding: 4px var(--gutter) 12px;
+    background: var(--c-bg-dark);
+  }
+
+  .site-header[data-nav-open="true"] .header-drawer { display: block; }
+
+  /* ドロワー内は 1 カラム縦積み */
+  .gnav,
+  .header-utility {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .gnav__link,
+  .header-utility a {
+    padding: 14px 4px;
+    border-bottom: 1px solid rgba(255, 255, 255, .15);
+    font-size: var(--fs-14);
+  }
+
+  .gnav__link { justify-content: space-between; }
+
+  .site-header[data-nav-open="true"] .nav-toggle__open { display: none; }
+  .site-header[data-nav-open="true"] .nav-toggle__close { display: block; }
+}
+
+/* ---- ~900px: hero タイポを縮小 ---- */
+@media (max-width: 900px) {
+  .hero__title { font-size: 36px; }
+  .hero__lead { font-size: 18px; }
+  .hero__label { font-size: 20px; }
+
+  /* ヘッダーは全幅ベタ付けをやめ、本文と同じ gutter に揃える */
+  .header-top { padding-inline: var(--gutter); }
+  .header-brand { padding-left: 0; }
+  .header-cta { margin-right: calc(var(--gutter) * -1); }
+
+  .localnav__inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  /* 横一列に収まらなくなるので 3 カラムグリッドへ（半端な折返しを防ぐ） */
+  .localnav__list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  .localnav__link { padding-inline: 12px; }
+}
+
+/* ---- ~768px: 電話ブロック / タグラインを畳む ---- */
+@media (max-width: 768px) {
+  .header-tagline { display: none; }
+
+  .header-tel {
+    padding-inline: 12px;
+    background: none;
+  }
+
+  .header-tel__num { font-size: var(--fs-16); }
+  .header-tel__hours { display: none; }
+
+  .header-cta {
+    width: 56px;
+    padding-inline: 0;
+  }
+
+  .header-cta span { display: none; }
+
+  .hero__body {
+    padding-top: 28px;
+    padding-bottom: 36px;
+  }
+
+  .hero__rule { margin-top: 20px; }
+  .hero__title { margin-top: 20px; }
+  .hero__lead { margin-top: 24px; }
+
+  .line-cta {
+    top: auto;
+    bottom: 16px;
+    right: 12px;
+    transform: none;
+    flex-direction: row;
+    width: auto;
+    padding: 10px 16px;
+    border-radius: 999px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, .28);
+  }
+
+  .line-cta__mark { width: 28px; height: 28px; }
+  .line-cta__text { font-size: var(--fs-14); }
+  .line-cta__text small { font-size: var(--fs-12); }
+  /* 「応 募！」は Figma 上も全角アキ + 負トラッキングで詰めているため、
+     1 行組みに変わる SP でもトラッキングは維持する。 */
+  .line-cta__text b { display: inline; }
+}
+
+/* ---- ~600px: ローカルナビを 2 カラムグリッドへ ---- */
+@media (max-width: 600px) {
+  :root { --gutter: 16px; }
+
+  .header-logo { width: 118px; height: 31px; }
+  .header-brand { gap: 12px; }
+
+  .header-tel {
+    gap: 6px;
+    padding-inline: 8px;
+  }
+
+  .header-tel__icon { font-size: 20px; }
+  .header-tel__num { font-size: var(--fs-14); }
+
+  .header-cta { width: 48px; }
+
+  .hero__title { font-size: 28px; }
+  .hero__lead { font-size: var(--fs-16); }
+  .hero__label { font-size: var(--fs-16); }
+
+  .localnav__inner {
+    min-height: 0;
+    padding-block: 20px;
+  }
+
+  .localnav__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .localnav__link {
+    min-height: 42px;
+    padding-inline: 8px;
+    font-size: var(--fs-14);
+  }
+}

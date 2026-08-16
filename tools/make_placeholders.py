@@ -1,0 +1,93 @@
+"""Figma書き出しアセットの代替プレースホルダを生成する。
+
+このセッションの egress ポリシーが figma.com を 403 で遮断しているため
+（CONNECT tunnel failed / 組織のネットワークポリシー）、design context が
+返す https://www.figma.com/api/mcp/asset/... を取得できない。
+レイアウト検証を止めないよう、デザイン実寸と同じジオメトリの
+プレースホルダをローカル生成して差し込む。
+
+実アセットが手に入ったら assets/ の同名ファイルを差し替えるだけでよい。
+詳細は assets/README.md を参照。
+"""
+
+from pathlib import Path
+
+from PIL import Image, ImageDraw
+
+ASSETS = Path(__file__).resolve().parent.parent / "assets"
+
+# CSS 上の表示サイズ。PNG は 2x で書き出す。
+LOGO_W, LOGO_H = 150, 39
+HERO_W, HERO_H = 1280, 355
+LINE_W, LINE_H = 71, 73
+
+SCALE = 2
+
+
+def _px(v: int) -> int:
+    return v * SCALE
+
+
+def make_logo() -> None:
+    w, h = _px(LOGO_W), _px(LOGO_H)
+    img = Image.new("RGBA", (w, h), (255, 255, 255, 0))
+    d = ImageDraw.Draw(img)
+    d.rounded_rectangle([0, 0, w - 1, h - 1], radius=6,
+                        fill=(232, 235, 240, 255), outline=(180, 188, 200, 255))
+    # 「M」のマークだけ模したシルエット（実ロゴの代替であることが分かる程度）
+    d.ellipse([8, 10, 8 + h - 20, 10 + h - 20], outline=(26, 53, 101, 255), width=4)
+    d.text((h + 2, h // 2 - 9), "LOGO 150x39", fill=(90, 100, 118, 255))
+    img.save(ASSETS / "logo.png")
+
+
+def make_hero() -> None:
+    """hero 下地は #5e5e5e、その上に写真を multiply/opacity .8 で重ねる設計。
+
+    プレースホルダは空〜建物を思わせる縦グラデーションにして、
+    ブレンド後の見え方がデザインと大きく乖離しないようにする。
+    """
+    w, h = HERO_W, HERO_H
+    img = Image.new("RGB", (w, h), (255, 255, 255))
+    d = ImageDraw.Draw(img)
+    top = (206, 216, 230)
+    bottom = (150, 158, 168)
+    for y in range(h):
+        t = y / max(h - 1, 1)
+        d.line(
+            [(0, y), (w, y)],
+            fill=tuple(round(top[i] + (bottom[i] - top[i]) * t) for i in range(3)),
+        )
+    # 右手に建物のシルエット（デザインの写真の構図に合わせる）。
+    # multiply 合成後に主張しすぎないよう、コントラストは低めにする。
+    d.rectangle([w * 0.52, h * 0.16, w * 0.90, h], fill=(176, 182, 190))
+    d.rectangle([w * 0.86, h * 0.10, w * 0.99, h], fill=(160, 166, 175))
+    for row in range(4):
+        for col in range(9):
+            x = w * 0.545 + col * (w * 0.037)
+            y = h * 0.26 + row * (h * 0.18)
+            d.rectangle([x, y, x + w * 0.018, y + h * 0.10], fill=(163, 169, 178))
+    img.save(ASSETS / "hero.png")
+
+
+def make_line_mark() -> None:
+    w, h = _px(LINE_W), _px(LINE_H)
+    img = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    pad = 8
+    d.rounded_rectangle([pad, pad, w - pad, h - pad - 12], radius=34,
+                        fill=(255, 255, 255, 255))
+    # 吹き出しのしっぽ
+    d.polygon([(w * 0.36, h - pad - 16), (w * 0.52, h - pad - 16), (w * 0.40, h - 4)],
+              fill=(255, 255, 255, 255))
+    d.text((w // 2 - 22, h // 2 - 14), "LINE", fill=(6, 199, 85, 255))
+    img.save(ASSETS / "line-brand.png")
+
+
+if __name__ == "__main__":
+    ASSETS.mkdir(parents=True, exist_ok=True)
+    make_logo()
+    make_hero()
+    make_line_mark()
+    for p in sorted(ASSETS.glob("*.png")):
+        with Image.open(p) as im:
+            print(f"{p.name}: {im.size[0]}x{im.size[1]}")
