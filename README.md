@@ -3,9 +3,6 @@
 Figma `9CJMHGoxwmbhJVxc2AvylL` / node `827:52372`
 「下層ページ（採用　会社を知る）」の **Hero 〜 ローカルナビ** を静的HTML+CSSで実装したもの。
 
-> このディレクトリは AI Bet Tracker 本体とは独立したマークアップ検証用です。
-> `docs/` は `src/dashboard.py` の生成物なので触れていません。
-
 ## ファイル
 
 ```
@@ -16,6 +13,8 @@ assets/                       画像（現状はプレースホルダ / assets/R
 tools/make_placeholders.py    プレースホルダ画像の生成
 tools/shot.py                 Playwright スクショ + Figma実測値との突き合わせ
 shots/                        375 / 768 / 1280 / 375-menu-open
+docs/design-decisions.md      デザイン判断の記録
+CLAUDE.md                     Claude Code 向けの運用ルール
 ```
 
 ## 確認
@@ -59,4 +58,4 @@ LINE の緑 `--c-line-brand: #06c755` だけは LINE ヤフー社のガイドラ
 font-weight は Figma 側に DemiLight(350) / Light(300) があるが、
 指定ルール（400/500/700）に合わせて **400 に丸めている**。
 
-統合の経緯と既知の差分は [`docs/design-decisions.md`](../../docs/design-decisions.md) を参照。
+統合の経緯と既知の差分は [`docs/design-decisions.md`](docs/design-decisions.md) を参照。
